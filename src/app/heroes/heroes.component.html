@@ -1,11 +1,12 @@
 <h2>My Heroes</h2>
 
 <div>
-  <label>Hero name:
+  <label
+    >Hero name:
     <input #heroName />
   </label>
   <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(heroName.value); heroName.value=''">
+  <button id="addButton" (click)="add(heroName.value); heroName.value = ''">
     add
   </button>
 </div>
