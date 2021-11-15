@@ -6,7 +6,8 @@ import { Hero } from "../hero";
 import { HeroService } from "../hero.service";
 import { HeroComponent } from "../hero/hero.component";
 import { HeroesComponent } from "./heroes.component";
-describe("HeroesComponent (shallow)", () => {
+
+describe("HeroesComponent (deep integration)", () => {
   let fixture: ComponentFixture<HeroesComponent>;
   let component: HeroesComponent;
   let HEROES: Hero[];
@@ -33,17 +34,15 @@ describe("HeroesComponent (shallow)", () => {
     component = fixture.componentInstance;
   });
 
-  it("should set heroes correctly from service", () => {
-    mockHeroService.getHeroes.and.returnValue(of(HEROES));
-    fixture.detectChanges();
-    expect(component.heroes.length).toBe(3);
-  });
-
-  it("should create one li for eeach hero", () => {
+  it("Should render each hero as a hero component", () => {
     mockHeroService.getHeroes.and.returnValue(of(HEROES));
     fixture.detectChanges();
 
-    let de = fixture.debugElement.queryAll(By.css("li"));
-    expect(de.length).toBe(3);
+    const db = fixture.debugElement.queryAll(By.directive(HeroComponent));
+
+    expect(db.length).toBe(3);
+    for (let i = 0; i < db.length; i++) {
+      expect(db[i].componentInstance.hero).toEqual(HEROES[i]);
+    }
   });
 });
